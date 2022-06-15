@@ -12,6 +12,8 @@ for i in range(3):
 # release it
 action = np.array([0,0,0,0])
 env.step(action)
+action = np.array([0,0,0,0])
+env.step(action)
 action = np.array([0,0,0,-0.1])
 env.step(action)
 print("released")
