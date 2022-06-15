@@ -6,9 +6,6 @@
         "dirichlet_boundary": [{
             "id": 3,
             "value": [0, 0, 0]
-        },{
-            "id": 4,
-            "value": [0, 0, 0]
         }
     ],
         "rhs": [0, 9.81, 0]
