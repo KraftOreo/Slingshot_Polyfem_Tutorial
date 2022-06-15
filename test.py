@@ -4,8 +4,8 @@ import numpy as np
 env = SlingShot()
 print("Initialzied.")
 # pull the rubber band
-for i in range(15):
-    action = np.array([0.02,0,0,0])
+for i in range(3):
+    action = np.array([0.1,0,0,0])
     env.step(action)
     print("step", i)
 
