@@ -1,99 +1,219 @@
 {
-    "problem": "GenericTensor",
-    "tensor_formulation": "NeoHookean",
-    "problem_params": {
-        "is_time_dependent": true,
-        "dirichlet_boundary": [{
-            "id": 3,
-            "value": [0, 0, 0]
+    "geometry": [
+        {
+            "mesh": "slingshot/assets/data/vol_mesh/mat.msh",
+            "transformation": {
+                "translation": [
+                    0.018,
+                    0.115,
+                    0
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    90
+                ],
+                "scale": [
+                    0.00485,
+                    0.01,
+                    0.21
+                ]
+            },
+            "volume_selection": 1,
+            "advanced": {
+                "normalize_mesh": false
+            },
+            "surface_selection": [
+                {
+                    "id": 3,
+                    "axis": -3,
+                    "position": -0.1
+                },
+                {
+                    "id": 3,
+                    "axis": 3,
+                    "position": 0.1
+                }
+            ]
+        },
+        {
+            "mesh": "slingshot/assets/data/vol_mesh/sphere_grooved.msh",
+            "transformation": {
+                "translation": [
+                    0,
+                    0.115,
+                    0
+                ],
+                "rotation": [
+                    90,
+                    0,
+                    0
+                ],
+                "scale": 0.0386
+            },
+            "volume_selection": 2,
+            "advanced": {
+                "normalize_mesh": false
+            },
+            "surface_selection": [
+                {
+                    "id": 3,
+                    "axis": -3,
+                    "position": -0.1
+                },
+                {
+                    "id": 3,
+                    "axis": 3,
+                    "position": 0.1
+                }
+            ]
+        },
+        {
+            "mesh": "slingshot/assets/data/surf_mesh/left_finger.obj",
+            "is_obstacle": true,
+            "enabled": true,
+            "transformation": {
+                "translation": [
+                    0.04,
+                    0.16032,
+                    0.0
+                ],
+                "rotation": [
+                    0,
+                    -90,
+                    0
+                ],
+                "scale": 1
+            },
+            "surface_selection": 1000
+        },
+        {
+            "mesh": "slingshot/assets/data/surf_mesh/right_finger.obj",
+            "is_obstacle": true,
+            "enabled": true,
+            "transformation": {
+                "translation": [
+                    0.04,
+                    0.06965,
+                    0.0
+                ],
+                "rotation": [
+                    0,
+                    -90,
+                    0
+                ],
+                "scale": 1
+            },
+            "surface_selection": 1001
         }
     ],
-        "rhs": [0, 9.81, 0]
+    "boundary_conditions": {
+        "obstacle_displacements": [
+            {
+                "id": 1000,
+                "value": [
+                    "0",
+                    "-0.02 * t",
+                    "0"
+                ]
+            },
+            {
+                "id": 1001,
+                "value": [
+                    "0",
+                    "0.02 * t",
+                    "0"
+                ]
+            }
+        ],
+        "rhs": [
+            0,
+            9.81,
+            0
+        ],
+        "dirichlet_boundary": [
+            {
+                "id": 3,
+                "value": [
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ]
     },
-    "t0": 0,
-    "dt": 0.01,
-    "time_steps": 50,
-    "friction_iterations": 100, 
-    "solver_params": {
-        "gradNorm": 1e-6,
-        "useGradNorm": false,
-        "broad_phase_method": "STQ"
+    "space": {
+        "advanced": {
+            "bc_method": "sample",
+            "quadrature_order": -1
+        }
     },
-    "line_search": "backtracking",
-    "project_to_psd": true,
-    "solver_type": "Eigen::CholmodSupernodalLLT",
-
-    "has_collision": true,
-    "dhat": 1e-5,
-
-    "mu": 0.8,
-    "max_al_weight": 1e30,
-    "meshes": [{
-        "mesh": "slingshot/assets/data/vol_mesh/mat.msh",
-        "position": [0.018, 0.115, 0],
-        "rotation": [0, 0, 90],
-        "scale": [0.00385, 0.01, 0.21],
-        "body_id": 1
+    "time": {
+        "t0": 0,
+        "dt": 0.01,
+        "time_steps": 50
     },
-    {
-        "mesh": "slingshot/assets/data/vol_mesh/sphere_grooved.msh",
-        "position": [0, 0.115, 0],
-        "rotation": [90, 0, 0],
-        "scale": 0.0386,
-        "body_id": 2
-    }
-    ],
-    "obstacles": [{
-        "mesh": "slingshot/assets/data/surf_mesh/left_finger.obj",
-        "position": [0.04, 0.16032, 0.0],
-        "rotation": [0, -90, 0],
-        "scale": 1,
-        "displacement": ["0", "-0.02 * t", "0"],
-        "enabled": true
-    },
-    {
-        "mesh": "slingshot/assets/data/surf_mesh/right_finger.obj",
-        "position": [0.04, 0.06965, 0.0],
-        "rotation": [0, -90, 0],
-        "scale": 1,
+    "contact": {
         "enabled": true,
-        "displacement": ["0", "0.02 * t", "0"]
-    }
-    ],
-    "normalize_mesh": false,
-
-    "body_params": [{
-        "id": 2,
-        "E": 1e7,
-        "nu": 0.4,
-        "rho": 1150
+        "dhat": 1e-05,
+        "friction_coefficient": 0.8
     },
-    {
-        "id": 1,
-        "E": 1e7,
-        "nu": 0.4,
-        "rho": 1150
-    }
-],
-    "boundary_sidesets": [{
-        "id": 3,
-        "axis": -3,
-        "position": -0.1
-    }, {
-        "id": 3,
-        "axis": 3,
-        "position": 0.1
-    }],
-    
-    "bc_method": "sample",
-    "quadrature_order": -1,
-    "save_time_sequence": true,
-    "save_solve_sequence_debug": false,
-    "vismesh_rel_area": 10000000,
-    "export": {
-        "time_sequence": "sim.pvd",
-        "paraview": "result.vtu",
-        "body_ids": true,
-        "material_params": true
+    "solver": {
+        "linear": {
+            "solver": "Eigen::PardisoLDLT"
+        },
+        "nonlinear": {
+            "line_search": {
+                "method": "backtracking"
+            },
+            "grad_norm": 1e-06,
+            "use_grad_norm": false
+        },
+        "augmented_lagrangian": {
+            "max_weight": 1e+30
+        },
+        "contact": {
+            "friction_iterations": 100,
+            "CCD": {
+                "broad_phase": "STQ"
+            }
+        }
+    },
+    "materials": [
+        {
+            "id": 2,
+            "E": 10000000.0,
+            "nu": 0.4,
+            "rho": 1150,
+            "type": "NeoHookean"
+        },
+        {
+            "id": 1,
+            "E": 1000000.0,
+            "nu": 0.4,
+            "rho": 1150,
+            "type": "NeoHookean"
+        }
+    ],
+    "output": {
+        "paraview": {
+            "file_name": "sim.pvd",
+            "options": {
+                "material": true,
+                "body_ids": true
+            },
+            "vismesh_rel_area": 10000000
+        },
+        "advanced": {
+            "save_solve_sequence_debug": false,
+            "save_time_sequence":true
+        }
+    },
+    "input": {
+        "data": {
+            "u_path": "slingshot/assets/tmp/u.txt",
+            "v_path": "slingshot/assets/tmp/v.txt",
+            "a_path": "slingshot/assets/tmp/a.txt"
+        }
     }
 }

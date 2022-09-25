@@ -1,7 +1,9 @@
 from slingshot.src.slingshot import SlingShot
 import numpy as np
+import time
 
-env = SlingShot()
+start=time.time()
+env = SlingShot(output_dir="results/simulation",force_reload=True)
 print("Initialzied.")
 # pull the rubber band
 for i in range(20):
@@ -19,7 +21,10 @@ action = np.array([0,0,0,-0.1])
 env.step(action)
 print("released")
 # let it fly
-for i in range(20):
+for i in range(40):
     action = np.array([0,0,0,0])
     env.step(action)
     print("flying", i)
+
+end=time.time()
+print("Takes ",end-start,"s")
