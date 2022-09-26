@@ -5,7 +5,6 @@ __pycache__/
 *vtu
 *vtm
 results/
-processing/
 # C extensions
 *.so
 .DS_Store
