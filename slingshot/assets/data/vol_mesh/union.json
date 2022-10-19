@@ -1,0 +1,6 @@
+{
+        "operation": "union",
+        "left": "rubber2.msh",
+        "right": "sphere.msh"
+}
+

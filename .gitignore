@@ -4,6 +4,10 @@ __pycache__/
 *$py.class
 *vtu
 *vtm
+*obj
+*msh
+*pvd
+*geo
 results/
 # C extensions
 *.so

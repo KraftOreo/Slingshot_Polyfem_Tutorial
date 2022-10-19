@@ -3,7 +3,7 @@ import numpy as np
 import time
 
 start=time.time()
-env = SlingShot(output_dir="results/simulation",force_reload=True)
+env = SlingShot(output_dir="results/simulation",force_reload=False)
 print("Initialzied.")
 # pull the rubber band
 for i in range(20):

@@ -1,10 +1,10 @@
 {
     "geometry": [
         {
-            "mesh": "slingshot/assets/data/vol_mesh/mat.msh",
+            "mesh": "slingshot/assets/data/vol_mesh/rubber_wide.msh",
             "transformation": {
                 "translation": [
-                    0.018,
+                    0.02,
                     0.115,
                     0
                 ],
@@ -14,9 +14,9 @@
                     90
                 ],
                 "scale": [
-                    0.00485,
-                    0.0001,
-                    0.21
+                    1,
+                    1,
+                    1
                 ]
             },
             "volume_selection": 1,
@@ -37,7 +37,7 @@
             ]
         },
         {
-            "mesh": "slingshot/assets/data/vol_mesh/sphere_grooved.msh",
+            "mesh": "slingshot/assets/data/vol_mesh/sphere.msh",
             "transformation": {
                 "translation": [
                     0,
@@ -189,7 +189,7 @@
         },
         {
             "id": 1,
-            "E": 1000000.0,
+            "E": 10000000.0,
             "nu": 0.4,
             "rho": 1150,
             "type": "NeoHookean"

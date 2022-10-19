@@ -1,5 +1,6 @@
 import polyfempy as pf
 import json
+import pickle
 import numpy as np
 import os
 
@@ -35,15 +36,22 @@ class SlingShot:
                 self.id_to_mesh[mesh["volume_selection"]] = mesh["mesh"]
                 self.id_to_position[mesh["volume_selection"]] = mesh["transformation"]["translation"]
         if not self.preloaded: 
+            print("preloading")
             self.pre_steps = 4
+            cnt=0
             # squeeze the ball
             for _ in range(self.pre_steps):
-                self.run_simulation()
-            # self.cumulative_action = {"0":np.array([0, -0.02 * self.dt * self.step_count, 0, 0.02 * self.dt * self.step_count]), "1":np.array([0, 0.02 * self.dt, 0, 0.02 * self.dt])}
+                self.step(np.array([0,0,0,0.04*self.dt]))
+                print("prestep ", cnt)
+                cnt+=1
             # pull the rubber band for some distance
             for _ in range(self.pre_steps):
                 self.step(np.array([0.01,0,0,0]))
+                print("prestep ", cnt)
+                cnt+=1
             self.solver.export_uva()
+            with open(r"slingshot/assets/tmp/cumulative_action.pickle",'wb') as f:
+                pickle.dump(self.cumulative_action,f,protocol=pickle.HIGHEST_PROTOCOL)
             self.preloaded=True
             self.init_config()
             self.init_solver(True)
@@ -61,10 +69,14 @@ class SlingShot:
         self.solver.load_mesh_from_settings()
         if self.preloaded:
             self.solver.set_output_dir(self.output_dir)
+            with open(r"slingshot/assets/tmp/cumulative_action.pickle",'rb') as f:
+                self.cumulative_action = pickle.load(f)
+                print("cumulative_action=")
+                print(self.cumulative_action)
         else:
             self.solver.set_output_dir("results/preload")
+            self.cumulative_action={"0":np.zeros(4),"1":np.zeros(4)}
         self.solver.init_timestepping(self.t0, self.dt)
-        self.cumulative_action = {"0":np.zeros(4), "1":np.zeros(4)}
         self.step_count=1
 
     def set_boundary_conditions(self, actions):
