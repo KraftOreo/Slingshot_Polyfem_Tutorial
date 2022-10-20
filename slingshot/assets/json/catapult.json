@@ -1,0 +1,142 @@
+{
+    "geometry": [
+        {
+            "mesh": "slingshot/assets/data/vol_mesh/mat.msh",
+            "transformation": {
+                "translation": [
+                    0,
+                    0,
+                    0
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [0.05,0.001,0.5] 
+            },
+            "volume_selection": 1,
+            "surface_selection":[
+                {
+                    "id":3,
+                    "axis":-3,
+                    "position":-0.24
+                }
+            ],
+            "advanced": {
+                "normalize_mesh": false
+            }
+        },
+        {
+            "mesh": "slingshot/assets/data/vol_mesh/cube_dense.msh",
+            "enabled":true,
+            "transformation": {
+                "translation": [
+                    0,
+                    0.022,
+                    0.23
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale":0.04
+            },
+            "volume_selection":2
+        }
+    ],
+    "boundary_conditions": {
+        "obstacle_displacements": [
+            {
+                "id": 1001,
+                "value": [
+                    "0",
+                    "0",
+                    "0"
+                ]
+            }
+        ],
+        "rhs": [
+            0,
+            9.81,
+            0
+        ],
+        "dirichlet_boundary": [
+            {
+                "id": 3,
+                "value": [
+                    0,
+                    0,
+                    0
+                ]
+            }
+        ]
+    },
+    "space": {
+        "advanced": {
+            "bc_method": "sample",
+            "quadrature_order": -1
+        }
+    },
+    "time": {
+        "t0": 0,
+        "dt": 0.01,
+        "time_steps": 50 
+    },
+    "contact": {
+        "enabled": true,
+        "dhat": 1e-07,
+        "friction_coefficient": 0.8
+    },
+    "solver": {
+        "linear": {
+            "solver": "Eigen::PardisoLDLT"
+        },
+        "nonlinear": {
+            "line_search": {
+                "method": "backtracking"
+            },
+            "grad_norm": 1e-07,
+            "use_grad_norm": false
+        },
+        "augmented_lagrangian": {
+            "max_weight": 1e+30
+        },
+        "contact": {
+            "friction_iterations": 100,
+            "CCD": {
+                "broad_phase": "STQ"
+            }
+        }
+    },
+    "materials": [
+        {
+            "id": 1,
+            "E": 1000000.0,
+            "nu": 0.49,
+            "rho": 1100,
+            "type": "NeoHookean"
+        },
+        { "id": 2,
+            "E": 1000000.0,
+            "nu": 0.49,
+            "rho": 1100,
+            "type": "NeoHookean"
+        }
+    ],
+    "output": {
+        "paraview": {
+            "file_name": "sim.pvd",
+            "options": {
+                "material": true,
+                "body_ids": true
+            },
+            "vismesh_rel_area": 10000000
+        },
+        "advanced": {
+            "save_solve_sequence_debug": false,
+            "save_time_sequence":true
+        }
+    }
+}
